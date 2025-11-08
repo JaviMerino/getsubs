@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "getsubs"
 version = "0.1.0"
-description = "getsubs - A Python application"
+description = "getsubs - download subtitles of videos"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {text = "MIT"}
 dependencies = [
-    # Add runtime dependencies here
+    "webvtt-py>=0.4.6",
 ]
 
 [project.scripts]

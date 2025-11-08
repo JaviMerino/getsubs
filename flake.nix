@@ -18,6 +18,31 @@
         pkgs = nixpkgs.legacyPackages.${system};
         python = pkgs.python3;
         pythonPackages = python.pkgs;
+
+        # Define webvtt-py package since it's not in nixpkgs
+        webvtt-py = pythonPackages.buildPythonPackage rec {
+          pname = "webvtt-py";
+          version = "0.5.1";
+          format = "setuptools";
+
+          src = pkgs.fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-IEDdMlJ33a3B4MbMZsvEodm2tJskxXoMM2Q3TD6KPcE=";
+          };
+
+          propagatedBuildInputs = with pythonPackages; [
+            docopt
+          ];
+
+          # Tests require network access
+          doCheck = false;
+
+          meta = with pkgs.lib; {
+            description = "WebVTT reader, writer and segmenter";
+            homepage = "https://github.com/glut23/webvtt-py";
+            license = licenses.mit;
+          };
+        };
       in
       {
         packages = {
@@ -34,7 +59,8 @@
             ];
 
             propagatedBuildInputs = with pythonPackages; [
-              # Add Python dependencies here
+              webvtt-py
+              yt-dlp
             ];
 
             meta = with pkgs.lib; {
@@ -51,6 +77,10 @@
             pythonPackages.pip
             pythonPackages.setuptools
             pythonPackages.wheel
+
+            # Dependencies
+            webvtt-py
+            pythonPackages.yt-dlp
 
             # Development tools
             pythonPackages.black
