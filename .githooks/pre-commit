@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Running pre-commit checks..."
+
+# Check if we're in a nix develop environment, if not enter it
+if [[ -z "${IN_NIX_SHELL:-}" ]]; then
+    exec nix develop --command "$0" "$@"
+fi
+
+failed=0
+
+# Check Python formatting with black
+echo "Checking Python formatting with black..."
+if ! black --check .; then
+    echo "❌ Black formatting check failed. Run 'black .' to fix."
+    failed=1
+else
+    echo "✅ Black formatting check passed"
+fi
+
+# Lint Python code with ruff
+echo "Checking Python code with ruff..."
+if ! ruff check .; then
+    echo "❌ Ruff linting failed. Run 'ruff check .' to see issues."
+    failed=1
+else
+    echo "✅ Ruff linting passed"
+fi
+
+# Type check Python code with mypy
+echo "Type checking Python code with mypy..."
+if ! mypy .; then
+    echo "❌ mypy type checking failed."
+    failed=1
+else
+    echo "✅ mypy type checking passed"
+fi
+
+# Check Nix formatting with nixfmt
+echo "Checking Nix file formatting..."
+if ! nixfmt --check flake.nix; then
+    echo "❌ Nix formatting check failed. Run 'nixfmt flake.nix' to fix."
+    failed=1
+else
+    echo "✅ Nix formatting check passed"
+fi
+
+if [[ $failed -eq 1 ]]; then
+    echo ""
+    echo "Pre-commit checks failed. Please fix the issues above before committing."
+    exit 1
+fi
+
+echo ""
+echo "All pre-commit checks passed! ✨"
+exit 0

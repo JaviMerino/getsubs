@@ -58,13 +58,37 @@ direnv allow
   nixfmt flake.nix
   ```
 
+### Bash
+
+**Linting:**
+- Use `shellcheck` for bash script linting
+  ```bash
+  shellcheck .githooks/pre-commit
+  ```
+
 ## Pre-commit Checks
 
-Before committing, run all checks:
+### Automatic Git Hooks
+
+Enable automatic pre-commit checks:
 
 ```bash
-# Format Python code
-black .
+git config --local core.hooksPath $PWD/.githooks
+```
+
+The pre-commit hook will automatically verify:
+- Black formatting (check mode - will fail if files need formatting)
+- Ruff linting
+- mypy type checking
+- nixfmt formatting (check mode - will fail if files need formatting)
+
+### Manual Checks
+
+To run checks manually before committing:
+
+```bash
+# Check Python formatting (without modifying files)
+black --check .
 
 # Lint Python code
 ruff check .
@@ -72,6 +96,6 @@ ruff check .
 # Type check Python code
 mypy .
 
-# Format Nix files
-nixfmt flake.nix
+# Check Nix formatting (without modifying files)
+nixfmt --check flake.nix
 ```
