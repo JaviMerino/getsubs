@@ -45,7 +45,12 @@
             pythonPackages.pip
             pythonPackages.setuptools
             pythonPackages.wheel
-            # Add development dependencies here
+
+            # Development tools
+            pythonPackages.black
+            pythonPackages.ruff
+            pythonPackages.mypy
+            nixfmt-rfc-style
           ];
 
           shellHook = ''
