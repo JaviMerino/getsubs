@@ -79,3 +79,7 @@ Or run directly:
 ```bash
 nix run
 ```
+
+## Acknowledgements
+
+Inspired by [getsubs](https://codeberg.org/EvanHahn/dotfiles/src/branch/main/home/bin/bin/getsubs) by [Evan Hahn](https://evanhahn.com). 
