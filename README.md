@@ -31,7 +31,22 @@ getsubs "https://www.youtube.com/watch?v=6t-BFe-frT8"
 The script will try to download manual subtitles first and fall back to
 auto-generated subtitles if manual ones aren't available.
 
-Example output:
+### Language Selection
+
+By default, getsubs downloads English subtitles. You can specify a different
+language using the `-l` or `--language` option:
+
+```bash
+# Spanish subtitles
+getsubs -l es "https://www.youtube.com/watch?v=6t-BFe-frT8"
+
+# French subtitles
+getsubs --language fr "https://www.youtube.com/watch?v=6t-BFe-frT8"
+```
+
+Use standard language codes (e.g., `en`, `es`, `fr`, `de`, `ja`, `zh`).
+
+### Example Output
 
 ```
 [Music]

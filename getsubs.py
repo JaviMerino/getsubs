@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import shutil
 import sys
@@ -10,12 +11,13 @@ import webvtt  # type: ignore
 import yt_dlp  # type: ignore
 
 
-def get_vtt(url: str, autogen_subs: bool) -> str | None:
+def get_vtt(url: str, autogen_subs: bool, language: str = "en") -> str | None:
     """Download VTT subtitles using yt-dlp.
 
     Args:
         url: Video URL to download subtitles from
         autogen_subs: If True, download auto-generated subtitles; if False, manual subs
+        language: Language code for subtitles (default: "en")
 
     Returns:
         VTT content as string, or None if not found
@@ -27,7 +29,7 @@ def get_vtt(url: str, autogen_subs: bool) -> str | None:
             "skip_download": True,
             "writesubtitles": not autogen_subs,
             "writeautomaticsub": autogen_subs,
-            "subtitleslangs": ["en"],
+            "subtitleslangs": [language],
             "subtitlesformat": "vtt",
             "outtmpl": os.path.join(temp_dir, "%(id)s.%(ext)s"),
             "quiet": True,
@@ -86,20 +88,23 @@ def print_vtt_lines(vtt_content: str) -> None:
 
 def main() -> None:
     """Main entry point for getsubs."""
-    args = sys.argv[1:]
+    parser = argparse.ArgumentParser(
+        description="Download and display subtitles from video URLs"
+    )
+    parser.add_argument("url", help="Video URL to download subtitles from")
+    parser.add_argument(
+        "-l",
+        "--language",
+        default="en",
+        help="Language code for subtitles (default: en)",
+    )
 
-    if len(args) > 1:
-        print("too many args", file=sys.stderr)
-        sys.exit(1)
-
-    if len(args) == 0:
-        print("needs a URL", file=sys.stderr)
-        sys.exit(1)
-
-    url = args[0]
+    args = parser.parse_args()
 
     # Try manual subtitles first, then auto-generated
-    vtt_content = get_vtt(url, autogen_subs=False) or get_vtt(url, autogen_subs=True)
+    vtt_content = get_vtt(
+        args.url, autogen_subs=False, language=args.language
+    ) or get_vtt(args.url, autogen_subs=True, language=args.language)
 
     if not vtt_content:
         print("no subs found", file=sys.stderr)
