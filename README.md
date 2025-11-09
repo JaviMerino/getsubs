@@ -36,6 +36,13 @@ Example output:
 hey so my name is [...]
 ```
 
+As the transcript is written to stdout, you can pipe it to other commands.  For example, you can use [`llm`](https://github.com/simonw/llm) to summarise the video:
+
+```bash
+getsubs 'https://www.youtube.com/watch?v=6t-BFe-frT8' | llm -m "llama3.2" "Summa
+rise this transcript from a presentation"
+```
+
 ## Development Environment
 
 This project uses Nix for reproducible development environments.
