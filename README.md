@@ -2,6 +2,40 @@
 
 Download subtitles of videos.
 
+## Installation
+
+Add the flake to your `flake.nix` inputs and install the default package.
+
+```nix
+{
+  inputs = {
+    [...]
+    getsubs.url = "github:javimerino/getsubs";
+  };
+```
+
+Or run without installing:
+
+```bash
+nix run github:javimerino/getsubs -- "https://www.youtube.com/watch?v=6t-BFe-frT8"
+```
+
+## Usage
+
+Download and extract subtitles from a video URL:
+
+```bash
+getsubs "https://www.youtube.com/watch?v=6t-BFe-frT8"
+```
+
+The script will try to download manual subtitles first and fall back to auto-generated subtitles if manual ones aren't available.
+
+Example output:
+```
+[Music]
+hey so my name is [...]
+```
+
 ## Development Environment
 
 This project uses Nix for reproducible development environments.
@@ -29,7 +63,7 @@ This will run the following checks automatically:
 - mypy type checking
 - nixfmt formatting (check mode)
 
-## Building
+### Building
 
 Build the project:
 ```bash
