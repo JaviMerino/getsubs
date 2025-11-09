@@ -75,6 +75,7 @@ This will run the following checks automatically:
 - Ruff linting
 - mypy type checking
 - nixfmt formatting (check mode)
+- Markdown linting with mdl
 
 ### Building
 

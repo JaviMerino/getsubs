@@ -47,6 +47,15 @@ else
     echo "✅ Nix formatting check passed"
 fi
 
+# Lint Markdown files with mdl
+echo "Linting Markdown files with mdl..."
+if ! mdl README.md; then
+    echo "❌ Markdown linting failed. Run 'mdl README.md' to see issues."
+    failed=1
+else
+    echo "✅ Markdown linting passed"
+fi
+
 if [[ $failed -eq 1 ]]; then
     echo ""
     echo "Pre-commit checks failed. Please fix the issues above before committing."

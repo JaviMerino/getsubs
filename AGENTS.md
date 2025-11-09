@@ -66,6 +66,14 @@ direnv allow
   shellcheck .githooks/pre-commit
   ```
 
+### Markdown
+
+**Linting:**
+- Use [mdl](https://github.com/markdownlint/markdownlint) for Markdown linting
+  ```bash
+  mdl README.md
+  ```
+
 ## Pre-commit Checks
 
 ### Automatic Git Hooks
@@ -81,6 +89,7 @@ The pre-commit hook will automatically verify:
 - Ruff linting
 - mypy type checking
 - nixfmt formatting (check mode - will fail if files need formatting)
+- Markdown linting with mdl
 
 ### Manual Checks
 
@@ -98,4 +107,7 @@ mypy .
 
 # Check Nix formatting (without modifying files)
 nixfmt --check flake.nix
+
+# Lint Markdown files
+mdl README.md
 ```

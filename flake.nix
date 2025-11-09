@@ -88,6 +88,7 @@
             pythonPackages.mypy
             nixfmt-rfc-style
             shellcheck
+            mdl
           ];
 
           shellHook = ''
