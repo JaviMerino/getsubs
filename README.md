@@ -28,15 +28,19 @@ Download and extract subtitles from a video URL:
 getsubs "https://www.youtube.com/watch?v=6t-BFe-frT8"
 ```
 
-The script will try to download manual subtitles first and fall back to auto-generated subtitles if manual ones aren't available.
+The script will try to download manual subtitles first and fall back to
+auto-generated subtitles if manual ones aren't available.
 
 Example output:
+
 ```
 [Music]
 hey so my name is [...]
 ```
 
-As the transcript is written to stdout, you can pipe it to other commands.  For example, you can use [`llm`](https://github.com/simonw/llm) to summarise the video:
+As the transcript is written to stdout, you can pipe it to other commands.  For
+example, you can use [`llm`](https://github.com/simonw/llm) to summarise the
+video:
 
 ```bash
 getsubs 'https://www.youtube.com/watch?v=6t-BFe-frT8' | llm -m "llama3.2" "Summa
@@ -52,6 +56,7 @@ nix develop
 ```
 
 Alternatively, use [direnv](https://direnv.net/) for automatic environment loading:
+
 ```bash
 direnv allow
 ```
@@ -65,6 +70,7 @@ git config --local core.hooksPath $PWD/.githooks
 ```
 
 This will run the following checks automatically:
+
 - Black formatting (check mode)
 - Ruff linting
 - mypy type checking
@@ -73,20 +79,25 @@ This will run the following checks automatically:
 ### Building
 
 Build the project:
+
 ```bash
 nix build
 ```
 
 Run the built application:
+
 ```bash
 ./result/bin/getsubs
 ```
 
 Or run directly:
+
 ```bash
 nix run
 ```
 
 ## Acknowledgements
 
-Inspired by [getsubs](https://codeberg.org/EvanHahn/dotfiles/src/branch/main/home/bin/bin/getsubs) by [Evan Hahn](https://evanhahn.com). 
+Inspired by
+[getsubs](https://codeberg.org/EvanHahn/dotfiles/src/branch/main/home/bin/bin/getsubs)
+by [Evan Hahn](https://evanhahn.com).
