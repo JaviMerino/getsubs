@@ -1,0 +1,25 @@
+name: "Checks"
+on:
+  - pull_request
+  - push
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Check Python formatting with black
+        run: nix develop --command black --check .
+      - name: Lint Python code with ruff
+        run: nix develop --command ruff check .
+      - name: Type check Python code with mypy
+        run: nix develop --command mypy .
+      - name: Check Nix formatting with nixfmt
+        run: nix develop --command nixfmt --check flake.nix
+      - name: Lint Markdown files with mdl
+        run: nix develop --command mdl README.md
