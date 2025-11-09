@@ -12,7 +12,7 @@
       nixpkgs,
       flake-utils,
     }:
-    flake-utils.lib.eachDefaultSystem (
+    (flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -96,5 +96,10 @@
           '';
         };
       }
-    );
+    ))
+    // {
+      overlays.default = final: prev: {
+        getsubs = self.packages.${prev.stdenv.hostPlatform.system}.default;
+      };
+    };
 }
